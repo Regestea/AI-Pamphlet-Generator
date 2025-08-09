@@ -1,116 +1,106 @@
-.logo.vite:hover {
-  filter: drop-shadow(0 0 2em #747bff);
+@import "tailwindcss";
+body {
+    font-family: 'Inter', sans-serif;
+    overflow: hidden; /* Prevent body scroll */
+}
+/* Glassmorphism base class */
+.glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafb);
+/* Neon Shadow Effect (Subtler) */
+.neon-shadow-cyan {
+    box-shadow: 0 0 6px rgba(6, 182, 212, 0.7), 0 0 10px rgba(6, 182, 212, 0.5);
 }
-:root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
-
-  color: #0f0f0f;
-  background-color: #f6f6f6;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+.neon-shadow-pink {
+    box-shadow: 0 0 6px rgba(236, 72, 153, 0.7), 0 0 10px rgba(236, 72, 153, 0.5);
 }
 
-.container {
-  margin: 0;
-  padding-top: 10vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
+.neon-text-cyan {
+    text-shadow: 0 0 3px #06b6d4, 0 0 6px #06b6d4;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: 0.75s;
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #1f2937;
+}
+::-webkit-scrollbar-thumb {
+    background: #06b6d4;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #0891b2;
 }
 
-.logo.tauri:hover {
-  filter: drop-shadow(0 0 2em #24c8db);
+/* Mobile Nav Transitions */
+.nav-panel {
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.mobile-nav-toggle-icon {
+    transition: transform 0.3s ease-in-out;
+}
+#mobile-nav-container.is-switched .mobile-nav-toggle-icon {
+    transform: rotate(180deg);
 }
 
-.row {
-  display: flex;
-  justify-content: center;
+#mobile-nav-container #nav-panel-1 { transform: translateY(0); }
+#mobile-nav-container #nav-panel-2 { transform: translateY(-100%); }
+#mobile-nav-container.is-switched #nav-panel-1 { transform: translateY(100%); }
+#mobile-nav-container.is-switched #nav-panel-2 { transform: translateY(0); }
+
+/* Form Step Animations */
+.form-step {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 1rem; /* 16px */
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+@media (min-width: 640px) {
+    .form-step {
+        padding: 2rem; /* 32px */
+    }
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+.form-step.hidden {
+    opacity: 0;
+    transform: scale(0.98);
+    pointer-events: none;
 }
 
-a:hover {
-  color: #535bf2;
+/* Neon Loading Spinner */
+.loader {
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-left-color: #06b6d4;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 1s linear infinite;
+}
+.loader-shadow {
+    box-shadow: 0 0 10px #06b6d4, 0 0 20px #06b6d4;
 }
 
-h1 {
-  text-align: center;
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
-input,
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  color: #0f0f0f;
-  background-color: #ffffff;
-  transition: border-color 0.25s;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-}
-
-button {
-  cursor: pointer;
-}
-
-button:hover {
-  border-color: #396cd8;
-}
-button:active {
-  border-color: #396cd8;
-  background-color: #e8e8e8;
-}
-
-input,
-button {
-  outline: none;
-}
-
-#greet-input {
-  margin-right: 5px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    color: #f6f6f6;
-    background-color: #2f2f2f;
-  }
-
-  a:hover {
-    color: #24c8db;
-  }
-
-  input,
-  button {
-    color: #ffffff;
-    background-color: #0f0f0f98;
-  }
-  button:active {
-    background-color: #0f0f0f69;
-  }
+/* Custom Select Arrow */
+select {
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2' stroke='%2306b6d4' class='w-6 h-6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.5em 1.5em;
 }
