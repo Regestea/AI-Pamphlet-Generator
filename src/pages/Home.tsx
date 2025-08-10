@@ -4,11 +4,13 @@ import Progressing from "../components/Progressing.tsx";
 import {useState} from "react";
 import {PamphletOptions} from "../types/PamphletOptions.ts";
 import {TopicData} from "../types/TopicData.ts";
+import {GeminiSendRequest} from "../Services/GeminiService.ts";
 
 enum Steps {
     One,
     Two,
     Three,
+    Four
 }
 
 type PamphletRequest = {
@@ -38,6 +40,10 @@ function Home() {
                     GoNextStep();
                 }}/>
             case Steps.Three:
+                GeminiSendRequest({
+                    userPrompt: "what day is today ?",
+                    systemPrompt: "answer all user questions in english"
+                }).then(x => console.log(x));
                 return <Progressing/>
         }
     }
