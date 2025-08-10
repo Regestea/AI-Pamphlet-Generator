@@ -1,8 +1,6 @@
 ﻿import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFilePdf,faFileWord} from "@fortawesome/free-solid-svg-icons";
 
-type DownloadFileProps = {};
-
 function DownloadFile() {
     return <>
 
