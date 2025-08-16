@@ -38,45 +38,7 @@ body {
     background: #0891b2;
 }
 
-/* Mobile Nav Transitions */
-.nav-panel {
-    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-}
-.mobile-nav-toggle-icon {
-    transition: transform 0.3s ease-in-out;
-}
-#mobile-nav-container.is-switched .mobile-nav-toggle-icon {
-    transform: rotate(180deg);
-}
 
-#mobile-nav-container #nav-panel-1 { transform: translateY(0); }
-#mobile-nav-container #nav-panel-2 { transform: translateY(-100%); }
-#mobile-nav-container.is-switched #nav-panel-1 { transform: translateY(100%); }
-#mobile-nav-container.is-switched #nav-panel-2 { transform: translateY(0); }
-
-/* Form Step Animations */
-.form-step {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 1rem; /* 16px */
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-    display: flex;
-    flex-direction: column;
-}
-@media (min-width: 640px) {
-    .form-step {
-        padding: 2rem; /* 32px */
-    }
-}
-
-.form-step.hidden {
-    opacity: 0;
-    transform: scale(0.98);
-    pointer-events: none;
-}
 
 /* Neon Loading Spinner */
 .loader {

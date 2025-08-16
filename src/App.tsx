@@ -6,8 +6,6 @@ import ErrorPage from "./pages/ErrorPage.tsx";
 import AboutPage from "./pages/AboutPage.tsx";
 import Home from "./pages/Home.tsx";
 
-
-
 const router = createBrowserRouter([{
     path: "/",
     element: <MainLayout/>,

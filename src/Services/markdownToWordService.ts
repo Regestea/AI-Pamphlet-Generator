@@ -1,15 +1,6 @@
 ﻿// src/services/markdownToWordService.ts
 import MarkdownIt from 'markdown-it';
-import { saveAs } from 'file-saver';
-import {
-    Document,
-    Packer,
-    Paragraph,
-    TextRun,
-    HeadingLevel,
-    ShadingType,
-    IStylesOptions,
-} from 'docx';
+import {Document, HeadingLevel, IStylesOptions, Packer, Paragraph, ShadingType, TextRun,} from 'docx';
 
 // Initialize markdown-it
 const md = new MarkdownIt({
@@ -20,6 +11,7 @@ const md = new MarkdownIt({
 
 /**
  * Parses an HTML node and its children to create an array of docx Paragraphs.
+ * This is the original parsing logic.
  */
 function htmlToDocxObjects(node: Node): Paragraph[] {
     const paragraphs: Paragraph[] = [];
@@ -43,6 +35,7 @@ function htmlToDocxObjects(node: Node): Paragraph[] {
                     textRunOptions.italics = true;
                 }
 
+                // This simple loop handles text within styled elements like <strong>Hello</strong>
                 elem.childNodes.forEach((nestedChild) => {
                     if (nestedChild.nodeType === Node.TEXT_NODE) {
                         runs.push(
@@ -81,7 +74,7 @@ function htmlToDocxObjects(node: Node): Paragraph[] {
                         children: [
                             new TextRun({
                                 text: codeNode.textContent || '',
-                                font: 'Gadugi', // Keep monospace font for code
+                                font: 'Gadugi', 
                             }),
                         ],
                         shading: {
@@ -111,37 +104,45 @@ function htmlToDocxObjects(node: Node): Paragraph[] {
     return paragraphs;
 }
 
-export async function convertMarkdownToWord(markdown: string, filename = 'document.docx') {
+/**
+ * Converts a Markdown string into a .docx file and returns a local Blob URL.
+ *
+ * @param markdown The Markdown string to convert.
+ * @returns A Promise that resolves to a Blob URL string for the .docx file.
+ */
+export async function convertMarkdownToWord(markdown: string): Promise<string> {
     if (typeof window === "undefined") {
         throw new Error("convertMarkdownToWord can only run in the browser.");
     }
 
     try {
         const htmlString = md.render(markdown);
+        
         const parser = new DOMParser();
         const docHtml = parser.parseFromString(htmlString, 'text/html');
+        
         const docxObjects = htmlToDocxObjects(docHtml.body);
-
-        // --- NEW: Define default styles for the document ---
+        
         const docStyles: IStylesOptions = {
             default: {
                 document: {
                     run: {
-                        font: 'Gadugi', // Set the default font here
+                        font: 'Gadugi', 
                     },
                 },
             },
         };
-
+        
         const doc = new Document({
-            styles: docStyles, // Apply the default styles
+            styles: docStyles,
             sections: [{
                 children: docxObjects,
             }],
         });
-
+        
         const blob = await Packer.toBlob(doc);
-        saveAs(blob, filename);
+        
+        return URL.createObjectURL(blob);
 
     } catch (error) {
         console.error("Failed to convert Markdown to Word:", error);

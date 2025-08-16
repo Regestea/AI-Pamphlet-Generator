@@ -1,6 +1,6 @@
 ﻿import {GoogleGenAI} from "@google/genai";
-import {GetSettings} from "./SettingsService.ts";
-import {GeminiRequest} from "../Requests/GeminiRequest.ts";
+import {GetSettings} from "./settingsService.ts";
+import {GeminiRequest} from "../requests/geminiRequest.ts";
 
 export async function GeminiSendRequest(geminiRequest: GeminiRequest) {
     const ai = new GoogleGenAI({apiKey: GetSettings().GeminiApiKey});
@@ -11,11 +11,7 @@ export async function GeminiSendRequest(geminiRequest: GeminiRequest) {
         const response = await ai.models.generateContent({
             model: settings.GeminiModel,
             contents: [
-                // System prompt (correct role is "system", not "model")
-                {role: "model", parts: [{text: geminiRequest.systemPrompt}]},
-
-                // User message
-                {role: "user", parts: [{text: geminiRequest.userPrompt}]},
+                {role: "user", parts: [{text: geminiRequest.prompt}]},
             ],
         });
 

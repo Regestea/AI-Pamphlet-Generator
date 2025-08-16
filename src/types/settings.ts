@@ -1,4 +1,4 @@
-﻿import {GeminiModels} from "../enums/GeminiModels.ts";
+﻿import {GeminiModels} from "../enums/geminiModels.ts";
 
 export type Settings = {
     GeminiApiKey: string,

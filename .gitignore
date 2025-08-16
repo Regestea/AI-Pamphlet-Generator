@@ -12,10 +12,14 @@ dist
 dist-ssr
 *.local
 /src-tauri/target
+/src-tauri/gen
+/src-tauri/cargo.lock
+/src-tauri/Cargo.toml
 
 # Editor directories and files
 .vscode/*
 .vscode
+.vs
 !.vscode/extensions.json
 .idea
 .DS_Store
@@ -24,3 +28,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+/src-tauri/Cargo.toml

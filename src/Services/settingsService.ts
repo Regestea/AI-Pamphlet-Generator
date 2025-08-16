@@ -1,11 +1,11 @@
-﻿import {GeminiModels} from "../enums/GeminiModels.ts";
-import {Settings} from "../types/Settings.ts";
+﻿import {GeminiModels} from "../enums/geminiModels.ts";
+import {Settings} from "../types/settings.ts";
 
 export function GetSettings() {
     let settings: string | null = localStorage.getItem("Settings");
     if (settings == null) {
         const settingsData: Settings = {
-            GeminiApiKey: "AIzaSyAPugWtK25v2DXQDzGNN76nTuRyf9e1sdA",
+            GeminiApiKey: "",
             GeminiModel: GeminiModels.Flash,
         }
         settings = JSON.stringify(settingsData);
