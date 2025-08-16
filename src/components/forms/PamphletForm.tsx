@@ -18,11 +18,14 @@ function PamphletForm(props: PamphletFormProps) {
 
     return <>
         <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, ease: "easeIn" }}
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            transition={{duration: 1, ease: "easeIn"}}
         >
-            <form onSubmit={handleSubmit(next)}>
+            <form
+                className={"max-w-3xl mx-auto p-2 sm:p-3 bg-gray-900/50 border border-gray-700 rounded-lg shadow-lg space-y-3"}
+                onSubmit={handleSubmit(next)}
+            >
                 <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4 neon-text-cyan">
                     Explain your Pamphlet or give a prompt
                 </h2>
@@ -30,7 +33,7 @@ function PamphletForm(props: PamphletFormProps) {
                 <textarea
                     {...register("AdditionalPrompt")}
                     placeholder="e.g., A tri-fold pamphlet for a new coffee shop..."
-                    className="w-full flex-1 bg-gray-800/50 border border-gray-700 rounded-lg p-3 sm:p-4 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 resize-none"
+                    className="w-full flex-1  bg-gray-800/50 border border-gray-700 rounded-lg p-3 sm:p-4 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 resize-none"
                 >
             
         </textarea>
@@ -80,12 +83,12 @@ function PamphletForm(props: PamphletFormProps) {
                     </div>
                 </div>
                 <button type={"submit"}
-                        className="w-full mt-4 sm:mt-6 bg-cyan-500 text-white font-bold rounded-lg py-3 hover:bg-cyan-600 transition-colors duration-300 neon-shadow-cyan">
+                        className="w-full   sm:mt-18 bg-cyan-500 text-white font-bold rounded-lg py-3 hover:bg-cyan-600 transition-colors duration-300 neon-shadow-cyan">
                     Next
                 </button>
             </form>
         </motion.div>
-       
+
     </>
 }
 
