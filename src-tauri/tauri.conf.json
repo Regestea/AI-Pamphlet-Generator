@@ -12,9 +12,9 @@
   "app": {
     "windows": [
       {
-        "title": "aipamphletgenerator",
-        "width": 800,
-        "height": 600
+        "title": "Ai Pamphlet Generator",
+        "width": 1360,
+        "height": 768
       }
     ],
     "security": {
