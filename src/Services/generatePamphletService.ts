@@ -1,6 +1,6 @@
-﻿import { GeminiSendRequest } from "./geminiService";
-import { PamphletRequest } from "../requests/pampheltRequest";
-import { SystemPromptBuilder } from "../Statics/systemPromptBuilder";
+﻿import {GeminiSendRequest} from "./geminiService";
+import {PamphletRequest} from "../requests/pampheltRequest";
+import {SystemPromptBuilder} from "../Statics/systemPromptBuilder";
 
 // Helper function for creating a delay
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -22,20 +22,29 @@ export async function generatePamphletService(r: PamphletRequest): Promise<strin
                 r.options.AdditionalPrompt
             ).defaultSystemPrompt
         )
-    ) ?? []; // Use '?? []' to gracefully handle if r.topics is null/undefined
+    ) ?? [];
 
-    // 2. Map each prompt to an asynchronous 'send' call. This creates an array of Promises.
-    const promises = prompts.map(prompt => send(prompt));
+    // 2. Sequentially process each prompt with a delay in between.
+    const markdownList: string[] = [];
+    for (const [index, prompt] of prompts.entries()) {
+        // Send the request and wait for the result
+        const result = await send(prompt);
+        markdownList.push(result);
 
-    // 3. Wait for all the API calls to complete.
-    const markdownList = await Promise.all(promises);
-    
-    // 4. Join the results into a single string. Using two newlines is better for Markdown.
+        // Wait for 13 seconds, but ONLY if it's not the last item
+        if (index < prompts.length - 1) {
+            console.log("Request sent. Delaying 13s before the next one...");
+            await delay(13000);
+        }
+    }
+
+    // 3. Join the results into a single string.
     return markdownList.join("\n\n");
 }
 
 /**
  * Sends a prompt to the Gemini API with a retry mechanism.
+ * (This function is correct and does not need changes)
  * @param prompt The prompt string to send.
  * @param maxRetries The maximum number of times to retry on failure.
  * @returns A promise that resolves to the API response text.
@@ -43,7 +52,7 @@ export async function generatePamphletService(r: PamphletRequest): Promise<strin
 async function send(prompt: string, maxRetries: number = 5): Promise<string> {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
-            const result = await GeminiSendRequest({ prompt: prompt });
+            const result = await GeminiSendRequest({prompt: prompt});
             if (result.success && result.text != undefined) {
                 return result.text; // Success!
             }
